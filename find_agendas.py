@@ -33,18 +33,32 @@ cities = ["Yucca Valley",
 
 PATH = "/Users/homepro/Development/CEG/chromedriver"
 
-for city in cities:
-	
-	driver = webdriver.Chrome(PATH)
-	get_first_search_result(city)
-	
+
+
 def get_search_term(city_name):
 	city_name = city_name.lower()
-	city_name = = city_name + " ca"
-	return city_name
+	city_name = city_name + " planning commission meeting agenda"	
+	search = city_name.replace(" ", "+")
+	return search
 
 
 def get_first_search_result(search):
-	result = driver.get(get_search_term(search))	
-	result.find_element_by_id("search")	
+	driver.get("https://www.google.com/search?q=" + get_search_term(search))	
+	search_div = driver.find_element_by_id("search")	
+	if search_div:
+		
+		print(search_div)
+		driver.quit()
+		return
+	else:
+		driver.quit()
+		return 	  
+
+for city in cities:
+	
+	driver = webdriver.Chrome(PATH)
+	print(get_search_term(city))
+	get_first_search_result(city)
+
+
 
